@@ -162,12 +162,13 @@ class Cache{
 
                     // if cache hit on read update LRU
                     if(read){
+                        fprintf(outputFile, "Hit! Read %p\n", address);
                         cache[lineIndex][setIndex].setLRU(clock);
                     }
                     // If cache hit on write change value for cache
                     else{
                         // print that there is a cache hit and you are overwriting the block
-                        fprintf(outputFile, "Hit! Replacing ");
+                        fprintf(outputFile, "Hit! Memory Write, Replacing ");
                         // insert the data
                         insertHelper(lineIndex, setIndex, data, address);
                         return;
@@ -178,7 +179,7 @@ class Cache{
                 if(!cache[lineIndex][setIndex].getData() && !read){
 
                     // print that it is fresh insertion
-                    fprintf(outputFile, "Inserting ");
+                    fprintf(outputFile, "Miss! Memory Write, Inserting ");
                     // insert data
                     insertHelper(lineIndex, setIndex, data, address);
                     return;
@@ -206,13 +207,16 @@ class Cache{
             }
         }
 
-        VOID insertHelper(int lineIndex, int setIndex, VOID* data, VOID* tag, bool instruction){
+        VOID insertHelper(int lineIndex, int setIndex, VOID* data, VOID* tag){
             cache[lineIndex][setIndex].setData(data);
             cache[lineIndex][setIndex].setTag(tag);
             cache[lineIndex][setIndex].setLRU(clock);
             cache[lineIndex][setIndex].setValid(true);
             if(type == INS_CACHE){
                 fprintf(outputFile, "%p, %s\n", tag, (*((std::string*)data)).c_str());
+            }
+            else{
+                fprintf(outputFile, "%p, %p\n", tag, data);
             }
         }
 

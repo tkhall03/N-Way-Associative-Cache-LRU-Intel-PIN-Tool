@@ -22,7 +22,7 @@ Cache cache(9, 3, DATA_CACHE);
 
 VOID cacheDisbatch(VOID* insAddr, VOID* memAddr, UINT32 memOp, VOID* voidCache, BOOL read){
     // Cache* cache = (Cache*)voidCache;
-    cache.insert(memAddr, insAddr, read); // 16
+    cache.insert(memAddr, insAddr, read); // 19
     // if(operation){
     //     fprintf(outputFile, "meer\n");
     // }
